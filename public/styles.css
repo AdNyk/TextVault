@@ -1,0 +1,172 @@
+body {
+    background-color: #000000;
+    /* Black background */
+    margin: 0;
+    color: #ffffff;
+    /* White text */
+    font-family: 'Courier New', monospace;
+    /* Choose a monospace font for code display */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+    margin-top: 0;
+    font-size: 1rem;
+    color: #ffffff;
+    /* White text */
+}
+
+.code-display-text{
+    text-align: left;
+    align-items: left;
+}
+.textArea{
+    background-color: #000000;
+    margin-top: -10px;
+    padding: 0;
+    margin-left: 0px;
+}
+pre {
+    margin: 0;
+    background-color: #111111;
+    /* Darker background for code display */
+}
+
+.copy-btn {
+    color: #ffffff !important;
+    /* White text for the copy button */
+ 
+    /* Darker background for the copy button */
+    border: 1px solid #ffffff !important;
+    margin-top: 10rem !important;
+}
+
+.copy-btn:hover {
+  
+    /* Darker background on hover */
+    color: #ffffff !important;
+}
+
+#code-display {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.line-numbers {
+    font-family: 'Courier New', monospace;
+    color: #aaaaaa;
+    text-align: start;
+    /* Align to the end to create a clearer separation */
+    margin-right: 1rem;
+    /* Add margin to the right */
+    font-size: 20px;
+    white-space: nowrap;
+    /* Prevent line breaks for the line numbers */
+}
+
+textarea {
+    background-color: #111111;
+    /* Darker background for textarea */
+    resize: none;
+    width: 100%;
+    padding: 0;
+    margin-left: 1rem;
+    color: #ffffff;
+    /* White text */
+    min-height: calc(100vh - 2rem);
+    border: none;
+    outline: none;
+    overflow: hidden;
+    /* Hide the scrollbar */
+}
+
+
+
+.welcome-section {
+    text-align: center;
+}
+
+.commands-section {
+    text-align: center;
+}
+
+
+.buttons-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    opacity: 0.15;
+    transition: opacity 200ms ease-in-out;
+    background-color: #000000;
+    /* Dark background for the buttons wrapper */
+    padding: 1rem;
+}
+
+
+.buttons-wrapper:hover {
+    opacity: 1;
+}
+
+.logo {
+    font-size: 2rem;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    /* White text */
+    width: 100%;
+    display: inline-block;
+}
+
+.logo:hover {
+    text-decoration: underline;
+}
+
+.buttons {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: center;
+}
+
+.buttons>*+* {
+    margin-left: .25rem;
+}
+
+.btn {
+    cursor: pointer;
+    background: none;
+    border: 1px solid #ffffff;
+    align-self: center;
+    /* White border color */
+    color: #ffffff;
+    margin-top: 20%;
+    border-radius: .25rem;
+    padding: .25rem .5rem;
+    width: fit-content;
+    /* Adjust the padding as needed for a smaller button */
+    font-size: 1rem;
+    /* Adjust the font size as needed */
+    transition: background-color 200ms ease-in-out;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #333333;
+    /* Darker background on hover */
+    color: #ffffff;
+}
+
+.shorten-url {
+    opacity: 0.15;
+    transition: opacity 200ms ease-in-out;
+    background-color: #000000;
+    /* Dark background for the buttons wrapper */
+    padding: 1rem;
+}
+
+.shorten-url:hover {
+    background-color: #000000;
+    opacity: 1;
+}
