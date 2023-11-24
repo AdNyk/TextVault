@@ -51,7 +51,9 @@ app.post("/save", async (req, res) => {
     let expiryTimestamp = null;
     if (customExpiry) {
       const currentTimestamp = new Date();
-      expiryTimestamp = new Date(currentTimestamp.getTime() + customExpiry * 60000);
+      expiryTimestamp = new Date(
+        currentTimestamp.getTime() + customExpiry * 60000
+      );
     }
 
     const document = await Document.create({ value, expiryTimestamp });
@@ -94,10 +96,10 @@ app.get("/:id/duplicate", async (req, res) => {
   }
 });
 
-app.get('/url-short', (req, res) => {
-  res.render('url-short', { error: "", newURL: {} });
+app.get("/url-short", (req, res) => {
+  res.render("url-short", { error: "", newURL: {} });
 });
-app.post('/url-short', async (req, res) => {
+app.post("/url-short", async (req, res) => {
   try {
     const customAlias = req.body.customAlias || nanoid(11);
     longURL = req.body.longURL;
@@ -130,28 +132,39 @@ app.post('/url-short', async (req, res) => {
     }
   } catch (error) {
     console.error("Error in /url-short:", error);
-    res.render('index', { error: "An error occurred. Please try again.", newURL: {} });
+    res.render("index", {
+      error: "An error occurred. Please try again.",
+      newURL: {},
+    });
   }
 });
-
 
 async function displayShortURL(req, res, result) {
   try {
     const existingURL = await URL.findOne({ shortID: result.shortID });
 
     if (existingURL) {
-      res.render('url-short', { error: "", newURL: existingURL });
+      res.render("url-short", { error: "", newURL: existingURL });
     } else {
-      console.error("Error finding short URL in displayShortURL:", result.shortID);
-      res.render('url-short', { error: "An error occurred. Please try again.", newURL: {} });
+      console.error(
+        "Error finding short URL in displayShortURL:",
+        result.shortID
+      );
+      res.render("url-short", {
+        error: "An error occurred. Please try again.",
+        newURL: {},
+      });
     }
   } catch (error) {
     console.error("Error in displayShortURL:", error);
-    res.render('url-short', { error: "An error occurred. Please try again.", newURL: {} });
+    res.render("url-short", {
+      error: "An error occurred. Please try again.",
+      newURL: {},
+    });
   }
 }
 
-app.get('/:shortID', async (req, res) => {
+app.get("/:shortID", async (req, res) => {
   const result = await URL.findOne({ shortID: req.params.shortID });
   if (result == null) return res.sendStatus(404);
 
@@ -159,7 +172,7 @@ app.get('/:shortID', async (req, res) => {
 });
 
 app.use((req, res, next) => {
-  if (req.url === '/favicon.ico') {
+  if (req.url === "/favicon.ico") {
     res.status(204).end();
   } else {
     next();
@@ -176,7 +189,10 @@ app.get("/documents/:id", async (req, res) => {
       await document.save();
 
       const currentTimestamp = new Date();
-      if (document.expiryTimestamp && currentTimestamp > document.expiryTimestamp) {
+      if (
+        document.expiryTimestamp &&
+        currentTimestamp > document.expiryTimestamp
+      ) {
         res.redirect("/");
       } else {
         res.render("code-display", {
@@ -195,81 +211,76 @@ app.get("/documents/:id", async (req, res) => {
   }
 });
 
-
 app.get("/shorten-url/:id", async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    try {
-        if (mongoose.Types.ObjectId.isValid(id)) {
-            console.log("Valid ObjectId:", id);
+  try {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      console.log("Valid ObjectId:", id);
 
-            const document = await Document.findById(id);
+      const document = await Document.findById(id);
 
-            if (document) {
-                // Retrieve the Referer header to get the URL of the previous page
-                const longURL = req.headers.referer || "";
-console.log(longURL);
-                res.render("shorten-url", {
-                    longURL,
-                    id,
-                    shortURL: document.shortURL,
-                    error: "",
-                });
-            } else {
-                res.redirect("/");
-            }
-        } else {
-            console.log("Invalid ObjectId:", id);
-            res.render("shorten-url", {
-                error: "Invalid short URL",
-                id,
-                shortURL: "",
-            });
-        }
-    } catch (e) {
-        console.error(e);
+      if (document) {
+        // Retrieve the Referer header to get the URL of the previous page
+        const longURL = req.headers.referer || "";
+        console.log(longURL);
+        res.render("shorten-url", {
+          longURL,
+          id,
+          shortURL: document.shortURL,
+          error: "",
+        });
+      } else {
         res.redirect("/");
+      }
+    } else {
+      console.log("Invalid ObjectId:", id);
+      res.render("shorten-url", {
+        error: "Invalid short URL",
+        id,
+        shortURL: "",
+      });
     }
+  } catch (e) {
+    console.error(e);
+    res.redirect("/");
+  }
 });
-
-
-
 
 // Update the /shorten-url/:id endpoint
 app.post("/shorten-url/:id", async (req, res) => {
-    const { id } = req.params;
-    const { customAlias } = req.body;
+  const { id } = req.params;
+  const { customAlias } = req.body;
 
-    try {
-        const document = await Document.findById(id);
+  try {
+    const document = await Document.findById(id);
 
-        if (document) {
-             document.longURL = req.headers.referer || "";
-            const newShortURL = BASE_URL + "/" + (customAlias || document.shortURL);
+    if (document) {
+      document.longURL = req.headers.referer || "";
+      const newShortURL = BASE_URL + "/" + (customAlias || document.shortURL);
 
-            document.shortURL = newShortURL;
-            await document.save();
+      document.shortURL = newShortURL;
+      await document.save();
 
-            // Render the same page with the updated short URL
-            res.render("shorten-url", {
-                longURL: document.longURL,
-                id,
-                shortURL: document.shortURL,
-                error: "",
-            });
-        } else {
-            res.redirect("/");
-        }
-    } catch (e) {
-        console.error(e);
-        res.render("shorten-url", {
-            error: "An error occurred. Please try again.",
-            id,
-            shortURL: "",
-        });
+      // Render the same page with the updated short URL
+      res.render("shorten-url", {
+        longURL: document.longURL,
+        id,
+        shortURL: document.shortURL,
+        error: "",
+      });
+    } else {
+      res.redirect("/");
     }
+  } catch (e) {
+    console.error(e);
+    res.render("shorten-url", {
+      error: "An error occurred. Please try again.",
+      id,
+      shortURL: "",
+    });
+  }
 });
-
 
 app.get("/:id", async (req, res) => {
   const id = req.params.id;
@@ -282,7 +293,10 @@ app.get("/:id", async (req, res) => {
       await document.save();
 
       const currentTimestamp = new Date();
-      if (document.expiryTimestamp && currentTimestamp > document.expiryTimestamp) {
+      if (
+        document.expiryTimestamp &&
+        currentTimestamp > document.expiryTimestamp
+      ) {
         res.redirect("/");
       } else {
         res.render("code-display", {
@@ -300,3 +314,4 @@ app.get("/:id", async (req, res) => {
     res.redirect("/");
   }
 });
+
