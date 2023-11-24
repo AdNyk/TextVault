@@ -16,21 +16,23 @@
     <div class="line-numbers">
         &gt;
     </div>
-    <form action="/save" method="POST">
+    <form action="/save" method="POST" onsubmit="return validateForm()">
         <%- include("_buttons.ejs", { canSave: true }) %>
-            <div class="wrapper">
-                <div class="textarea-wrapper">
-                    <textarea autofocus name="value" class="textArea"><%= locals.value %></textarea>
-                </div>
-                <input type="number" name="customExpiry" class="customTimer" placeholder="Custom Expiry (minutes)"
-                    oninput="validateCustomExpiry(this)">
+        <div class="wrapper">
+            <div class="textarea-wrapper">
+                <textarea autofocus name="value" class="textArea" oninput="validateTextarea(this)"><%= locals.value %></textarea>
             </div>
+            <input style="color: white;background-color:black" type="number" name="customExpiry" class="customTimer" placeholder="Custom Expiry (minutes)"
+                oninput="validateCustomExpiry(this)">
+        </div>
     </form>
     <script>
         autosize(document.querySelector('.textArea'));
 
         function validateCustomExpiry(input) {
             // Ensure the input is a positive integer
+              input.value = input.value.replace(/\D/g, '');
+
             let value = parseInt(input.value, 10);
             if (isNaN(value) || value < 0) {
                 input.value = ''; // Clear the input if it's not a valid number
@@ -39,6 +41,27 @@
                 const maxMinutes = 2 * 365 * 24 * 60;
                 input.value = Math.min(value, maxMinutes);
             }
+        }
+
+        function validateTextarea(textarea) {
+            // Limit the textarea to 2500 words
+            const maxWords = 2500;
+            const wordCount = textarea.value.split(/\s+/).length;
+            if (wordCount > maxWords) {
+                // Trim the excess words
+                const words = textarea.value.split(/\s+/).slice(0, maxWords);
+                textarea.value = words.join(' ');
+            }
+        }
+
+        function validateForm() {
+            const textarea = document.querySelector('.textArea');
+            const wordCount = textarea.value.split(/\s+/).length;
+            if (wordCount > 200) {
+                alert('Exceeded maximum word limit (200 words).');
+                return false;
+            }
+            return true;
         }
     </script>
 </body>

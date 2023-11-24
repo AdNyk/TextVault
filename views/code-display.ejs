@@ -11,11 +11,9 @@
     <div class="wrapper">
         <%- include("_buttons.ejs", { id: locals.id }) %>
             <div class="line-numbers">
-                <% for (let i=1; i <=code.split('\n').length; i++) { %>
-                    <div class="numbers">
-                        <%= i %>
-                    </div>
-                    <% } %>
+                <div class="line-numbers">
+                    &gt;
+                </div>
             </div>
             <pre class="textArea">
             <code class="code-display-text <%= locals.language ? `language-${locals.language}` : "" %>" id="code-display"><%= code %></code>
