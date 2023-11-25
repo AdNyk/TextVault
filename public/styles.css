@@ -1,53 +1,139 @@
-/* styles.css */
-
 body {
-    background-color: #000000!important;
+ height: 100vh;
+    background: url("images/ss.png") no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
     /* Black background */
     margin: 0;
-    color: #ffffff!important;
+    color: #ffffff;
     /* White text */
     font-family: 'Courier New', monospace;
     /* Choose a monospace font for code display */
 }
+.shorten-url-body{
+    background: url("images/bg.svg") no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.url-c{
+    background-color: #cf1010;
+}
 
 .wrapper {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     padding: 1rem 0.5rem;
     margin-top: 0;
     font-size: 1rem;
     color: #ffffff;
+    align-self: center;
+    text-align: center;
+    /* align-items: center; */
     /* White text */
 }
+.index-wrapper{
+    display: flex;
+    /* display: flex; */
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+    margin-top: 0;
+    font-size: 1rem;
+    color: #ffffff;
+    align-self: center;
+    text-align: center;
+}
+.index-main-button{
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    
+}
 
-.code-display-text {
+.index-text{
+    font-style:"font-family: 'Balsamiq Sans', cursive;";
+    font-size: larger;
+    color: rgb(255, 255, 255);
+    text-shadow: .5px .5px   rgb(5, 5, 5);
+    
+}
+.new-text{
+    color: #1c7933;
+}
+
+.index-mid{
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    width: 60%;
+    font-weight: bold;
+    
+}
+.shorten-url-mid {
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    width: 60%;
+    font-weight: bold;
+    
+}
+.new-middle{
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    width: 60%;
+    font-weight: bold;
+
+}
+
+.code-display-text{
     text-align: left;
     align-items: left;
-    margin-top: 10px;
 }
-
-.textArea {
-    background-color: #000000;
-    margin-top: 10px;
-    padding: 0;
-    margin-left: 0px;
+.textArea{
+    display: inline-flex;
+    background-color: #c7c7d0; 
+    border-radius: 20px;
+    width: 90%;
+    font-size: large;
+    margin-top: 20px;
+    height: 420px;
+    border: 10px ;
+    padding: 15px;
 }
-
+.space-button{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.count{
+    font-style:"font-family: 'Balsamiq Sans', cursive;";
+    font-size: larger;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-shadow: .5px .5px   rgb(5, 5, 5);
+}
 pre {
     margin: 0;
     background-color: #111111;
     /* Darker background for code display */
 }
+.code-display-mid{
+    align-self: center;
+    text-align: center;
+    align-items: center;
+
+}
 
 .copy-btn {
     color: #ffffff !important;
     /* White text for the copy button */
+ 
     /* Darker background for the copy button */
     border: 1px solid #ffffff !important;
-    margin-top: 10rem !important;
+    /* margin-top: 10rem !important; */
 }
 
 .copy-btn:hover {
+  
     /* Darker background on hover */
     color: #ffffff !important;
 }
@@ -70,19 +156,26 @@ pre {
 }
 
 textarea {
-    background-color: #111111;
+    background-color: #ffffff;
     /* Darker background for textarea */
     resize: none;
     width: 100%;
     padding: 0;
     margin-left: 1rem;
-    color: #ffffff;
-    /* White text */
-   height: 570px;
+    /* color: #ffffff; */
+  margin-top: 5px;
     border: none;
     outline: none;
     overflow: hidden;
-    /* Hide the scrollbar */
+   
+}
+
+.title-header{
+    DISPLAY: INLINE-BLOCK;
+    text-decoration: underline;
+    font-family: 'Balsamiq Sans', cursive;
+    font-size:200%;
+    color: #79431c;
 }
 
 .welcome-section {
@@ -92,29 +185,44 @@ textarea {
 .commands-section {
     text-align: center;
 }
+.customTimer{
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    width: 180px;
+    margin-top: 5px;
+    align-items: center;
+    width: 180px;
+}
 
 .buttons-wrapper {
-    position: fixed;
+   
+    /* position: fixed; */
+    display: inline-block;
+    /* width: 50px; */
     top: 0;
     right: 0;
-    opacity: 0.15;
+    
     transition: opacity 200ms ease-in-out;
-    background-color: #000000;
+    /* background-color: #bb7d7d; */
     /* Dark background for the buttons wrapper */
-    padding: 1rem;
+   
 }
 
-.container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .buttons-wrapper:hover {
     opacity: 1;
 }
 
+.index-logo{
+   display: inline-block;
+    background-image: url(../images/logo.png);
+    width: 100px;
+    height: 90px;
+    
+    
+    /* background: url(); */
+}
 .logo {
     font-size: 2rem;
     text-align: center;
@@ -131,7 +239,7 @@ textarea {
 
 .buttons {
     display: flex;
-    margin-top: 0.5rem;
+    
     justify-content: center;
 }
 
@@ -141,14 +249,16 @@ textarea {
 
 .btn {
     cursor: pointer;
-    background: none;
-    border: 1px solid #ffffff;
+    background: rgb(188 151 165);
+    box-shadow: 1px 1px;
+    border: 2px solid #ffffff;
     align-self: center;
     /* White border color */
     color: #ffffff;
-    margin-top: 20%;
-    border-radius: .25rem;
-    padding: .25rem .5rem;
+       
+    /* margin-top: 5%; */
+    border-radius: 10px;
+    padding: 0.25rem 1.75rem;
     width: fit-content;
     /* Adjust the padding as needed for a smaller button */
     font-size: 1rem;
@@ -159,20 +269,25 @@ textarea {
 }
 
 .btn:hover {
-    background-color: #333333;
+    background-color: #6061a8;
     /* Darker background on hover */
     color: #ffffff;
 }
 
 .shorten-url {
-    opacity: 0.15;
+    opacity: 0.9;
     transition: opacity 200ms ease-in-out;
-    background-color: #000000;
-    /* Dark background for the buttons wrapper */
-    padding: 1rem;
+    background-color: rgb(188 151 165);
+    /* box-shadow: 3px 5px; */
+    padding: 7px;
+    margin-left: 12px;
 }
 
+
 .shorten-url:hover {
-    background-color: #000000;
+    background-color: 6061a8;
     opacity: 1;
+}
+.url-title{
+    color: white;
 }

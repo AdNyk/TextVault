@@ -9,12 +9,13 @@
 
 <body>
     <div class="wrapper">
-        <%- include("_buttons.ejs", { id: locals.id }) %>
-            <div class="line-numbers">
-                <div class="line-numbers">
-                    &gt;
-                </div>
-            </div>
+        
+          <div class="code-display-mid">
+            <%- include("_buttons.ejs", { id: locals.id }) %>
+            <!-- Copy URL button -->
+            <button class="btn copy-btn shorten-url" onclick="copyURL()">Copy URL</button>
+            <a class="btn copy-btn shorten-url" href="/shorten-url/<%= locals.id %>">Shorten URL</a>
+        
             <pre class="textArea">
             <code class="code-display-text <%= locals.language ? `language-${locals.language}` : "" %>" id="code-display"><%= code %></code>
         </pre>
@@ -24,12 +25,10 @@
                 <% } %>
 
                     <!-- Display Main URL Access Count -->
-                    <p>Main URL Access Count: <%= locals.mainURLAccessCount %>
+                    <p class="count">Main URL Access Count: <%= locals.mainURLAccessCount %>
                     </p>
-
-                    <!-- Copy URL button -->
-                    <button class="btn copy-btn shorten-url" onclick="copyURL()">Copy URL</button>
-                    <a class="btn copy-btn shorten-url" href="/shorten-url/<%= locals.id %>">Shorten URL</a>
+                    
+</div>
     </div>
 
     <!-- JavaScript to copy URL to clipboard -->
