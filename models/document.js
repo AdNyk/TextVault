@@ -23,6 +23,7 @@ const documentScheme = new mongoose.Schema({
     type: Number,
     default: -1,
   },
+  customAlias:String,
 });
 
 module.exports = mongoose.model('document', documentScheme, 'objects');
