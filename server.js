@@ -46,26 +46,29 @@ app.get("/new", (req, res) => {
 
 app.post("/save", async (req, res) => {
   const { value, customExpiry } = req.body;
-  try {
-    console.log("Saving document:", { value, customExpiry });
+try {
+  console.log("Saving document:", { value, customExpiry });
 
-    let expiryTimestamp = null;
-    if (customExpiry) {
-      const currentTimestamp = new Date();
-      expiryTimestamp = new Date(
-        currentTimestamp.getTime() + customExpiry * 60000
-      );
-    }
+  let expiryTimestamp = null;
+  if (customExpiry) {
+    const currentTimestamp = new Date();
+    expiryTimestamp = new Date(
+      currentTimestamp.getTime() + customExpiry * 60000
+    );
 
-    const document = await Document.create({ value, expiryTimestamp });
-    console.log("Document saved successfully:", document);
-
-    // Redirect to the dedicated route for displaying saved documents
-    res.redirect(`/documents/${document.id}`);
-  } catch (e) {
-    console.error("Error saving document:", e);
-    res.render("new", { value });
+    // Convert to local time zone (Asia/Calcutta in this case)
+    expiryTimestamp = new Date(expiryTimestamp.toLocaleString('en-US', { timeZone: 'Asia/Calcutta' }));
   }
+
+  const document = await Document.create({ value, expiryTimestamp });
+  console.log("Document saved successfully:", document);
+
+
+  res.redirect(`/documents/${document.id}`);
+} catch (e) {
+  console.error("Error saving document:", e);
+  res.render("new", { value });
+}
 });
 
 app.post("/api/generate-url", async (req, res) => {

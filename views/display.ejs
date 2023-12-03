@@ -31,11 +31,8 @@
     <!-- JavaScript to copy URL to clipboard -->
     <script>
         function copyURL() {
-            // Create a text area element
             var textArea = document.createElement("textarea");
-            // Set the value (URL) to be copied
             textArea.value = window.location.href;
-            // Append the text area to the document
             document.body.appendChild(textArea);
             // Select the text in the text area
             textArea.select();
