@@ -143,13 +143,11 @@ app.get("/:param", async (req, res) => {
   const param = req.params.param;
 
   try {
-    // Check if the param is a customAlias in the database
     const document = await Document.findOne({ customAlias: param });
 
     if (document) {
       res.redirect(document.longURL);
     } else {
-      // If no matching document found, check if it's a valid shortID
       const result = await URL.findOne({ shortID: param });
 
       if (result == null) {
@@ -215,7 +213,7 @@ app.get("/documents/:id", async (req, res) => {
       ) {
         res.redirect("/");
       } else {
-        res.render("code-display", {
+        res.render("display", {
           code: document.value,
           id,
           expiryTimestamp: document.expiryTimestamp,
@@ -240,18 +238,16 @@ app.get("/shorten-url/:id", async (req, res) => {
       const document = await Document.findById(id);
 
       if (document) {
-        // Retrieve the Referer header to get the URL of the previous page
+        
         const longURL = req.headers.referer || "";
         console.log(longURL);
 
-        // Save longURL to the document
         document.longURL = longURL;
         await document.save();
 
         const shortURL = document.customAlias;
 
-        // Render the same page with the updated short URL
-        res.render("shorten-url", {
+        res.render("paste-url", {
           longURL,
           id,
           shortURL,
@@ -262,7 +258,7 @@ app.get("/shorten-url/:id", async (req, res) => {
       }
     } else {
       console.log("Invalid ObjectId:", id);
-      res.render("shorten-url", {
+      res.render("paste-url", {
         error: "Invalid short URL",
         id,
         shortURL: "",
@@ -284,7 +280,7 @@ app.post("/shorten-url/:id", async (req, res) => {
       if (customAlias) {
         const existingDocument = await Document.findOne({ customAlias });
         if (existingDocument) {
-          return res.render("shorten-url", {
+          return res.render("paste-url", {
             longURL: document.longURL,
             error: "Custom alias already in use. Please choose another one.",
             id,
@@ -296,18 +292,18 @@ app.post("/shorten-url/:id", async (req, res) => {
 
       await document.save();
 
-      res.render("shorten-url", {
+      res.render("paste-url", {
         longURL: document.longURL,
         id,
         shortURL: BASE_URL + "/" + document.customAlias,
-        error: "", // Pass an empty string or handle it as needed
+        error: "", 
       });
     } else {
       res.redirect("/");
     }
   } catch (e) {
     console.error(e);
-    res.render("shorten-url", {
+    res.render("paste-url", {
       error: "An error occurred. Please try again.",
       id,
       shortURL: "",

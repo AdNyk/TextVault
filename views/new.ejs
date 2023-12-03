@@ -15,7 +15,7 @@
 <body>
   <form action="/save" method="POST" onsubmit="return validateForm()">
     <div class="wrapper">
-      <%- include("_buttons.ejs", { canSave: true }) %>
+      <%- include("buttons.ejs", { canSave: true }) %>
         <input type="number" name="customExpiry" class="customTimer" placeholder="Custom Expiry (minutes)"
           oninput="validateCustomExpiry(this)" />
         <div class="textarea-wrapper">
@@ -23,7 +23,6 @@
 <%= locals.value %></textarea>
         </div>
     </div>
-    <button type="submit">Save</button>
   </form>
   <script>
     autosize(document.querySelector(".textArea"));
@@ -31,19 +30,17 @@
       const textarea = document.querySelector(".textArea");
       const wordCount = textarea.value.trim().split(/\s+/).length;
       if (wordCount > 150) {
-        alert("Exceeded maximum word limit (2 words).");
+        alert("Exceeded maximum word limit (150 words).");
         return false;
       }
       return true;
     }
 
     function validateCustomExpiry(input) {
-      // Ensure the input is a positive integer
       let value = parseInt(input.value, 10);
       if (isNaN(value) || value < 0) {
-        input.value = ""; // Clear the input if it's not a valid number
+        input.value = ""; 
       } else {
-        // Limit the input to a maximum of two years (in minutes)
         const maxMinutes = 2 * 365 * 24 * 60;
         input.value = Math.min(value, maxMinutes);
       }
